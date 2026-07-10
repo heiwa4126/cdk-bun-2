@@ -11,7 +11,8 @@
 		"destroy": "cdk destroy",
 		"format": "oxfmt",
 		"lint": "oxlint",
-		"check": "oxfmt && oxlint --fix"
+		"check": "oxfmt && oxlint --fix",
+		"curl": "curl \"$(jq .CdkBun2Stack.fnUrl outputs.json -r)\""
 	},
 	"dependencies": {
 		"aws-cdk-lib": "^2.261.0",

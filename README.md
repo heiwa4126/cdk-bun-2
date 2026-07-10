@@ -21,7 +21,8 @@ bun run test
 # デプロイ
 aws login
 bun run deploy
-## URLが表示されるのでブラウザなどで開く
+#-- URLが表示されるのでブラウザなどで開く
+bun run curl  # curl と jq があれば動く
 
 # おわったら消す
 bun run destroy
@@ -39,8 +40,8 @@ bun run destroy
 STACK_SUFFIX=dev
 ```
 
-- `STACK_SUFFIX` が未設定または空文字 ⇒ スタック名: `CdkBun1Stack`
-- `STACK_SUFFIX=dev` ⇒ スタック名: `CdkBun1Stack-dev`
+- `STACK_SUFFIX` が未設定または空文字 ⇒ スタック名: `CdkBun2Stack`
+- `STACK_SUFFIX=dev` ⇒ スタック名: `CdkBun2Stack-dev`
 
 ## メモ
 
@@ -57,12 +58,4 @@ STACK_SUFFIX=dev
 
 ### cdk-nag (v3)
 
-入れてみました。AwsSolutions-IAM4 をサプレスしています。
-
-これ除外ルールにしてるのは、「これを本気で除外しようとするととてつもなく面倒で、サンプルの域を超えるから」です。
-詳しくはそこらの AI Chat で "cdk-nag(v3) の AwsSolutions-IAM4 が警告対象になる理由を教えて" とか聞いてください。
-
-参考 (`bun ci` のあとにクリックしてください):
-
-- [cdk-nag RULES.md](node_modules/cdk-nag/RULES.md)
-- [cdk-nag README.md](node_modules/cdk-nag/README.md)
+小細工して AwsSolutions-IAM4 をサプレスしなくてもいいようにしました。
