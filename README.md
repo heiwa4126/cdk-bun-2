@@ -1,15 +1,7 @@
 # cdk-bun-2
 
-AWS CDK (TypeScript) を全部 [Bun](https://bun.com/) でやるテスト。
-
-TypeScript, ts-node, jest なし。esbuild あり(これはいまのところ難しい)
-
-```console
-$ bun -v
-1.3.14
-$ cdk --version
-2.1129.0 (build 629ca49)
-```
+[cdk-bun-1](https://github.com/heiwa4126/cdk-bun-1) が
+サンプルとしてはちょっと無理、な感じになってきたので、別レポジトリを作りました。
 
 ## 動かし方
 
