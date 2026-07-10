@@ -5,7 +5,7 @@ import * as logs from "aws-cdk-lib/aws-logs";
 import { Construct } from "constructs";
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
-export class CdkBun1Stack extends cdk.Stack {
+export class CdkBun2Stack extends cdk.Stack {
 	constructor(scope: Construct, id: string, props?: cdk.StackProps) {
 		super(scope, id, props);
 

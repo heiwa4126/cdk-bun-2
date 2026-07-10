@@ -1,5 +1,5 @@
 {
-	"name": "cdk-bun-1",
+	"name": "cdk-bun-2",
 	"version": "0.1.0",
 	"scripts": {
 		"test": "bun test test/*.test.ts",

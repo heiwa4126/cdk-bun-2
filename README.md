@@ -1,4 +1,4 @@
-# cdk-bun-1
+# cdk-bun-2
 
 AWS CDK (TypeScript) を全部 [Bun](https://bun.com/) でやるテスト。
 

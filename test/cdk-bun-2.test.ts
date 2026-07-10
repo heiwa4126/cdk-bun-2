@@ -1,11 +1,11 @@
 import { App } from "aws-cdk-lib";
 import { Template } from "aws-cdk-lib/assertions";
 import { test } from "bun:test";
-import { CdkBun1Stack } from "../lib/cdk-bun-1-stack";
+import { CdkBun2Stack } from "../lib/cdk-bun-2-stack";
 
 test("synthesizes the Lambda, URL and log group", () => {
 	const app = new App();
-	const stack = new CdkBun1Stack(app, "MyTestStack");
+	const stack = new CdkBun2Stack(app, "MyTestStack");
 	const template = Template.fromStack(stack);
 
 	template.resourceCountIs("AWS::Lambda::Function", 1);

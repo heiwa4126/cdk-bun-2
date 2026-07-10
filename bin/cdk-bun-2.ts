@@ -1,6 +1,6 @@
 import { App, Validations } from "aws-cdk-lib/core";
 import { AwsSolutionsChecks } from "cdk-nag";
-import { CdkBun1Stack } from "../lib/cdk-bun-1-stack";
+import { CdkBun2Stack } from "../lib/cdk-bun-2-stack";
 
 function getStackName(baseStackName: string, rawSuffix?: string): string {
 	return rawSuffix ? `${baseStackName}-${rawSuffix}` : baseStackName;
@@ -9,7 +9,7 @@ function getStackName(baseStackName: string, rawSuffix?: string): string {
 const app = new App();
 const rawSuffix = process.env.STACK_SUFFIX?.trim();
 
-new CdkBun1Stack(app, getStackName("CdkBun1Stack", rawSuffix), {
+new CdkBun2Stack(app, getStackName("CdkBun2Stack", rawSuffix), {
 	/* If you don't specify 'env', this stack will be environment-agnostic.
 	 * Account/Region-dependent features and context lookups will not work,
 	 * but a single synthesized template can be deployed anywhere. */
