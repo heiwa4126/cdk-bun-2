@@ -23,8 +23,8 @@ new CdkBun2Stack(app, getStackName("CdkBun2Stack", rawSuffix), {
 });
 
 // cdk-nag things
-app.node.addMetadata(Validations.ACKNOWLEDGED_RULES_METADATA_KEY, {
-	"annotation::AwsSolutions-IAM4[Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]":
-		"Lambda basic execution role is required so the function can write logs to CloudWatch Logs.",
-});
+// app.node.addMetadata(Validations.ACKNOWLEDGED_RULES_METADATA_KEY, {
+// 	"annotation::AwsSolutions-IAM4[Policy::arn:<AWS::Partition>:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole]":
+// 		"Lambda basic execution role is required so the function can write logs to CloudWatch Logs.",
+// });
 Validations.of(app).addPlugins(new AwsSolutionsChecks(app));
