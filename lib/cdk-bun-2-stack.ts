@@ -1,36 +1,42 @@
-import * as cdk from "aws-cdk-lib";
-import * as iam from "aws-cdk-lib/aws-iam";
-import * as lambda from "aws-cdk-lib/aws-lambda";
+import { Aws, CfnOutput, Fn, RemovalPolicy, Stack, StackProps } from "aws-cdk-lib";
+import {
+	Effect,
+	PolicyDocument,
+	PolicyStatement,
+	Role,
+	ServicePrincipal,
+} from "aws-cdk-lib/aws-iam";
+import { FunctionUrlAuthType, HttpMethod, Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction, OutputFormat } from "aws-cdk-lib/aws-lambda-nodejs";
-import * as logs from "aws-cdk-lib/aws-logs";
+import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
 import { Construct } from "constructs";
 
-export class CdkBun2Stack extends cdk.Stack {
-	constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+export class CdkBun2Stack extends Stack {
+	constructor(scope: Construct, id: string, props?: StackProps) {
 		super(scope, id, props);
 
 		// arn:aws:cloudformation:region:account:stack/STACK_NAME/STACK_GUID
-		const stackGuid = cdk.Fn.select(2, cdk.Fn.split("/", cdk.Aws.STACK_ID));
+		const stackGuid = Fn.select(2, Fn.split("/", Aws.STACK_ID));
 		// GUID の先頭ブロックだけ使って短くする（例: a1b2c3d4）
-		const stableSuffix = cdk.Fn.select(0, cdk.Fn.split("-", stackGuid));
+		const stableSuffix = Fn.select(0, Fn.split("-", stackGuid));
 
 		// Lambda共有ロググループ(リソース数を減らす)
-		const sharedLogGroup = new logs.LogGroup(this, "SharedLambdaLogGroup", {
+		const sharedLogGroup = new LogGroup(this, "SharedLambdaLogGroup", {
 			logGroupName: `/aws/lambda/cdk-bun2-lambda-shared-${stableSuffix}`,
-			retention: logs.RetentionDays.ONE_WEEK,
-			removalPolicy: cdk.RemovalPolicy.DESTROY,
+			retention: RetentionDays.ONE_WEEK,
+			removalPolicy: RemovalPolicy.DESTROY,
 		});
 
 		// AWSLambdaBasicExecutionRole を基にして
 		// sharedLogGroup にだけ書き込み権限を付与するIAMロールを作成
-		const lambdaExecutionRole = new iam.Role(this, "LambdaExecutionRole", {
-			assumedBy: new iam.ServicePrincipal("lambda.amazonaws.com"),
+		const lambdaExecutionRole = new Role(this, "LambdaExecutionRole", {
+			assumedBy: new ServicePrincipal("lambda.amazonaws.com"),
 			description: "Execution role for lambdas with access to shared Lambda log group",
 			inlinePolicies: {
-				SharedLogGroupWritePolicy: new iam.PolicyDocument({
+				SharedLogGroupWritePolicy: new PolicyDocument({
 					statements: [
-						new iam.PolicyStatement({
-							effect: iam.Effect.ALLOW,
+						new PolicyStatement({
+							effect: Effect.ALLOW,
 							actions: ["logs:CreateLogStream", "logs:PutLogEvents"],
 							resources: [sharedLogGroup.logGroupArn],
 						}),
@@ -43,7 +49,7 @@ export class CdkBun2Stack extends cdk.Stack {
 		const fn = new NodejsFunction(this, "lambda1", {
 			entry: "lambda/app1/index.ts",
 			handler: "handler",
-			runtime: lambda.Runtime.NODEJS_24_X,
+			runtime: Runtime.NODEJS_24_X,
 			role: lambdaExecutionRole,
 			logGroup: sharedLogGroup,
 			bundling: {
@@ -55,15 +61,15 @@ export class CdkBun2Stack extends cdk.Stack {
 
 		// Lambda Function URL版
 		const fnUrl = fn.addFunctionUrl({
-			authType: lambda.FunctionUrlAuthType.NONE,
+			authType: FunctionUrlAuthType.NONE,
 			cors: {
 				// テストなんで極甘で
-				allowedMethods: [lambda.HttpMethod.ALL],
+				allowedMethods: [HttpMethod.ALL],
 				allowedOrigins: ["*"],
 			},
 		});
 
-		new cdk.CfnOutput(this, "fnUrl", {
+		new CfnOutput(this, "fnUrl", {
 			value: fnUrl.url,
 		});
 	}
