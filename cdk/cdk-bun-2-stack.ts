@@ -31,6 +31,7 @@ export class CdkBun2Stack extends Stack {
 		// sharedLogGroup にだけ書き込み権限を付与するIAMロールを作成
 		const lambdaExecutionRole = new Role(this, "LambdaExecutionRole", {
 			assumedBy: new ServicePrincipal("lambda.amazonaws.com"),
+			roleName: `LambdaExecutionRole-${stableSuffix}`,
 			description: "Execution role for lambdas with access to shared Lambda log group",
 			inlinePolicies: {
 				SharedLogGroupWritePolicy: new PolicyDocument({
