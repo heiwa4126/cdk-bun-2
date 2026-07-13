@@ -1,6 +1,6 @@
 import { App, Validations } from "aws-cdk-lib/core";
 import { AwsSolutionsChecks } from "cdk-nag";
-import { CdkBun2Stack } from "../lib/cdk-bun-2-stack";
+import { CdkBun2Stack } from "./cdk-bun-2-stack";
 
 function getStackName(baseStackName: string, rawSuffix?: string): string {
 	return rawSuffix ? `${baseStackName}-${rawSuffix}` : baseStackName;

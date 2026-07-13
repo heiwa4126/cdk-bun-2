@@ -20,6 +20,7 @@ bun run test
 
 # デプロイ
 aws login
+bun run bootstrap # 1回だけ実行。たまに更新されるらしい
 bun run deploy
 #-- URLが表示されるのでブラウザなどで開く
 bun run curl  # curl と jq があれば動く
