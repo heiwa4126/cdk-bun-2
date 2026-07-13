@@ -57,6 +57,13 @@ STACK_SUFFIX=dev
 
 - [❗NOTICE (aws-lambda): Lambda cdk managed log group duplicates · Issue #34612 · aws/aws-cdk](https://github.com/aws/aws-cdk/issues/34612)
 
+あと、以下のようにスタック内で個別に制御できるらしいのであとで試す
+
+```ts
+// このスタックだけ、CDK管理のロググループ自動生成を有効化する
+this.node.setContext("@aws-cdk/aws-lambda:useCdkManagedLogGroup", true);
+```
+
 ### cdk-nag (v3)
 
 小細工して AwsSolutions-IAM4 をサプレスしなくてもいいようにしました。
