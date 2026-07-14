@@ -20,7 +20,7 @@
 	},
 	"devDependencies": {
 		"@types/aws-lambda": "^8.10.162",
-		"aws-cdk": "2.1129.0",
+		"aws-cdk": "2.1130.0",
 		"bun-types": "^1.3.14",
 		"cdk-nag": "^3.0.1",
 		"esbuild": "^0.28.1"
