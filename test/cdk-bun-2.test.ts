@@ -10,16 +10,16 @@ test("synthesizes the Lambda, URL and log group", () => {
 
 	template.resourceCountIs("AWS::Lambda::Function", 1);
 	template.hasResourceProperties("AWS::Lambda::Function", {
-		Runtime: "nodejs24.x",
+		Runtime: "nodejs24.x"
 	});
 
 	template.resourceCountIs("AWS::Lambda::Url", 1);
 	template.hasResourceProperties("AWS::Lambda::Url", {
-		AuthType: "NONE",
+		AuthType: "NONE"
 	});
 
 	template.resourceCountIs("AWS::Logs::LogGroup", 1);
 	template.hasResourceProperties("AWS::Logs::LogGroup", {
-		RetentionInDays: 7,
+		RetentionInDays: 7
 	});
 });

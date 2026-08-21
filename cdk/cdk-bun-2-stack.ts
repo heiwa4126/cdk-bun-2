@@ -4,7 +4,7 @@ import {
 	PolicyDocument,
 	PolicyStatement,
 	Role,
-	ServicePrincipal,
+	ServicePrincipal
 } from "aws-cdk-lib/aws-iam";
 import { FunctionUrlAuthType, HttpMethod, Runtime } from "aws-cdk-lib/aws-lambda";
 import { NodejsFunction, OutputFormat } from "aws-cdk-lib/aws-lambda-nodejs";
@@ -24,7 +24,7 @@ export class CdkBun2Stack extends Stack {
 		const sharedLogGroup = new LogGroup(this, "SharedLambdaLogGroup", {
 			logGroupName: `/aws/lambda/cdk-bun2-lambda-shared-${stableSuffix}`,
 			retention: RetentionDays.ONE_WEEK,
-			removalPolicy: RemovalPolicy.DESTROY,
+			removalPolicy: RemovalPolicy.DESTROY
 		});
 
 		// AWSLambdaBasicExecutionRole を基にして
@@ -39,11 +39,11 @@ export class CdkBun2Stack extends Stack {
 						new PolicyStatement({
 							effect: Effect.ALLOW,
 							actions: ["logs:CreateLogStream", "logs:PutLogEvents"],
-							resources: [sharedLogGroup.logGroupArn],
-						}),
-					],
-				}),
-			},
+							resources: [sharedLogGroup.logGroupArn]
+						})
+					]
+				})
+			}
 		});
 
 		// lambda1
@@ -55,9 +55,9 @@ export class CdkBun2Stack extends Stack {
 			logGroup: sharedLogGroup,
 			bundling: {
 				minify: true, // minifyオプションを有効にする
-				format: OutputFormat.ESM, // ES Modulesを使用する
+				format: OutputFormat.ESM // ES Modulesを使用する
 				// externalModules: ["aws-sdk"], // AWS SDKは外部モジュールとして扱う（デフォルト）
-			},
+			}
 		});
 
 		// Lambda Function URL版
@@ -66,12 +66,12 @@ export class CdkBun2Stack extends Stack {
 			cors: {
 				// テストなんで極甘で
 				allowedMethods: [HttpMethod.ALL],
-				allowedOrigins: ["*"],
-			},
+				allowedOrigins: ["*"]
+			}
 		});
 
 		new CfnOutput(this, "fnUrl", {
-			value: fnUrl.url,
+			value: fnUrl.url
 		});
 	}
 }
