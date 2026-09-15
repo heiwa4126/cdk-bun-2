@@ -31,24 +31,24 @@ bun run destroy
 
 ### スタック名サフィックス
 
-環境変数 `STACK_SUFFIX` を設定すると、スタック名の末尾にサフィックスが付きます。
+環境変数`STACK_SUFFIX`を設定すると、スタック名の末尾にサフィックスが付きます。
 
 [Bun は自動で .env を読む](https://bun.com/docs/runtime/environment-variables#setting-environment-variables)
-ので、`.env` に書くといいでしょう。
+ので、`.env`に書くといいでしょう。
 
 ```sh
 # .env
 STACK_SUFFIX=dev
 ```
 
-- `STACK_SUFFIX` が未設定または空文字 ⇒ スタック名: `CdkBun2Stack`
+- `STACK_SUFFIX`が未設定または空文字 ⇒ スタック名: `CdkBun2Stack`
 - `STACK_SUFFIX=dev` ⇒ スタック名: `CdkBun2Stack-dev`
 
 ## メモ
 
 ### ロググループの自動生成をやめる
 
-`cdk.json` の
+`cdk.json`の
 `"@aws-cdk/aws-lambda:useCdkManagedLogGroup": false`
 で、ロググループの自動生成を止めています。
 命名規則やライフサイクル、削除ポリシーを制御したいので。
@@ -70,6 +70,6 @@ this.node.setContext("@aws-cdk/aws-lambda:useCdkManagedLogGroup", true);
 
 ### CDKのディレクトリ
 
-ルートに lib/ や bin/ があるのが気に入らない(CDK 専用のくせに)ので、
-全部 cdk/ にうつした。
+ルートに lib/や bin/があるのが気に入らない(CDK 専用のくせに)ので、
+全部 cdk/にうつした。
 ちゃんと動くので、これからはこうする。
